@@ -1,0 +1,45 @@
+from selenium.webdriver import Chrome
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+import pyautogui
+
+# Inicialize o ChromeDriver (certifique-se de ter o ChromeDriver instalado)
+navegador = Chrome()
+
+# Abra o WhatsApp Web no navegador
+navegador.get("https://web.whatsapp.com/")
+
+input("Faça o login no WhatsApp Web e pressione Enter após a conclusão...")
+
+# Nome do grupo
+grupo_nome = "[3] IJJ - BUGOU? QA TÁ ON!"
+# Mensagem personalizada com o nome do seu squad
+mensagem = f"Automação - Squad4"
+
+# Localize o campo de pesquisa
+campo_pesquisa = navegador.find_element(By.XPATH, "//div[@contenteditable='true']")
+campo_pesquisa.send_keys(grupo_nome)
+
+sleep(3)
+
+# Localize o resultado do grupo
+resultado_grupo = navegador.find_element(By.XPATH, f"//span[@title='{grupo_nome}']")
+resultado_grupo.click()
+
+sleep(5)
+
+# Digite a mensagem
+print(mensagem)
+
+campo_mensagem = navegador.find_element(By.XPATH, f"//div[@title='Digite uma mensagem']//p[@class='selectable-text copyable-text iq0m558w g0rxnol2']")
+campo_mensagem.send_keys(mensagem)
+pyautogui.write(mensagem)
+
+botao_envio = navegador.find_element(By.XPATH, f"//span[@data-icon='send']")
+botao_envio.click()
+
+sleep(5)
+
+# Feche o navegador
+navegador.quit()
